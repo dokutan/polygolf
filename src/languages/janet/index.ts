@@ -28,6 +28,7 @@ import {
   text,
   intToDecOpOrText,
   isForEachChar,
+  isInt,
   cast,
 } from "../../IR";
 import { golfLastPrint, golfLastPrintInt } from "../../plugins/print";
@@ -142,6 +143,8 @@ const janetLanguage: Language = {
         "concat[List]": (...x) => func("array/concat", list([]), ...x),
         "slice[byte]": (a, b, c) => rangeIndexCall(a, b, op.add(b, c), int(1n)),
         "slice[List]": (a, b, c) => rangeIndexCall(a, b, op.add(b, c), int(1n)),
+        range_excl: (a, b, c) =>
+          isInt(1n)(c) ? func("range", a, b) : func("range", a, b, c),
       }),
       mapOpsTo.builtin({ true: "true", false: "false" }),
       mapOpsTo.func({

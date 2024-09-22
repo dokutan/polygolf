@@ -22,6 +22,7 @@ import {
   op,
   text,
   intToDecOpOrText,
+  isInt,
 } from "../../IR";
 import { golfLastPrint, golfLastPrintInt } from "../../plugins/print";
 import { usePrimaryTextOps } from "../../plugins/textOps";
@@ -112,6 +113,8 @@ const clojureLanguage: Language = {
         "slice[List]": (a, b, c) =>
           func("subvec", func("vec", a), b, op.add(b, c)),
         repeat: (a, b) => func("apply", builtin("str"), func("repeat", b, a)),
+        range_excl: (a, b, c) =>
+          isInt(1n)(c) ? func("range", a, b) : func("range", a, b, c),
       }),
       mapOpsTo.func({
         is_even: "even?",
